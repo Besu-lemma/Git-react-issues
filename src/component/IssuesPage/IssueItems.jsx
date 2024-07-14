@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import IssuesBoxHeader from "./IssuesBoxHeader";
 import IssueList from "./IssueList";
-import { BarLoader } from "react-spinners";
+import { CircleLoader } from "react-spinners";
 import ReactPaginate from "react-paginate";
 import { fetchIssues, setCurrentPage } from "../../redux/githubSlice";
 
@@ -31,7 +31,7 @@ function IssueItems() {
         <IssuesBoxHeader />
         {loading ? (
           <div className="h-[58vh] flex justify-center items-center">
-            <BarLoader color="#fff" />
+            <CircleLoader color="#fc466b" size={85} />
           </div>
         ) : (
           <IssueList />
@@ -40,23 +40,23 @@ function IssueItems() {
       <div className="py-8">
         <ReactPaginate
           pageCount={totalPages}
-          pageRangeDisplayed={10}
+          pageRangeDisplayed={5}
           marginPagesDisplayed={2}
           onPageChange={handlePageChange}
-          containerClassName="flex gap-4 h-[30px] text-md text-white justify-center items-center pagination"
+          containerClassName="flex flex-wrap justify-center items-center gap-2"
           activeClassName="bg-blue-600 hover:border-transparent rounded-md"
           previousLinkClassName={`prev ${
             activePage === 0
               ? "opacity-50 cursor-not-allowed"
-              : "text-blue-500 flex px-3 justify-center border border-transparent transition hover:border-white rounded-md"
+              : "text-blue-500 px-3 py-1 border border-transparent transition hover:border-white rounded-md"
           }`}
           nextLinkClassName={`next ${
             activePage === totalPages - 1
               ? "opacity-50 cursor-not-allowed"
-              : "text-blue-500 px-3 flex justify-center border border-transparent transition hover:border-white rounded-md"
+              : "text-blue-500 px-3 py-1 border border-transparent transition hover:border-white rounded-md"
           }`}
-          pageLinkClassName="page border border-transparent w-full flex justify-center items-center hover:border"
-          pageClassName="w-[30px] flex justify-center border border-transparent transition hover:border-white rounded-md"
+          pageLinkClassName="page border border-transparent px-3 py-1 flex justify-center items-center transition hover:border-white rounded-md text-white"
+          breakLinkClassName="px-3 py-1 text-white"
           forcePage={activePage}
         />
       </div>

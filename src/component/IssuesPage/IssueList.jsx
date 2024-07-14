@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { ClosedIcon, CommentIcon, OpenIcon } from "./Icons";
 import { formatDistanceToNow } from "date-fns";
 import Additional from "../Dropdowns/Additional";
-
+import githubSlice from "../../redux/githubSlice";
 function IssueList() {
   const { issues, error } = useSelector((state) => state.github);
 

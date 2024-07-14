@@ -1,39 +1,34 @@
-// src/redux/githubSlice.js
-
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Octokit } from "@octokit/core";
+
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
 
-const perPage = 10;
-
 const initialState = {
   issues: [],
   loading: true,
-  totalPages: 0,
+  totalPages: 1,
   currentPage: 1,
   error: { status: false, message: null },
-  search: "facebook/react+is:issue+is:open",
+  search: "is:issue is:open",
 };
 
 export const fetchIssues = createAsyncThunk(
   "github/fetchIssues",
   async ({ page, search }, { rejectWithValue }) => {
     try {
+      console.log(`Fetching issues for page: ${page}`);
       const response = await octokit.request("GET /search/issues", {
         q: search,
         page: page,
-        per_page: perPage,
+        per_page: 10,
         headers: {
           "X-GitHub-Api-Version": "2022-11-28",
         },
       });
 
-      const totalPages =
-        response.data.total_count < 1000
-          ? Math.ceil(response.data.total_count / perPage)
-          : Math.ceil(1000 / perPage);
+      const totalPages = Math.ceil(response.data.total_count / 10);
 
       return {
         issues: response.data.items,
@@ -42,6 +37,7 @@ export const fetchIssues = createAsyncThunk(
         search,
       };
     } catch (error) {
+      console.error("Error fetching issues:", error);
       return rejectWithValue({
         status: true,
         message: error.message || "Unknown Error",

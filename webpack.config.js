@@ -5,6 +5,7 @@ module.exports = {
   resolve: {
     fallback: {
       os: require.resolve("os-browserify/browser"),
+      path: require.resolve("path-browserify"),
     },
   },
   entry: "./src/index.js", // Adjust the entry point as needed
@@ -28,7 +29,9 @@ module.exports = {
   },
   plugins: [new Dotenv()],
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
+    static: {
+      directory: path.join(__dirname, "dist"),
+    },
     compress: true,
     port: 9000,
   },
