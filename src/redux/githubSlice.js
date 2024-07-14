@@ -22,13 +22,17 @@ export const fetchIssues = createAsyncThunk(
       const response = await octokit.request("GET /search/issues", {
         q: search,
         page: page,
-        per_page: 10,
+        per_page: 25,
         headers: {
           "X-GitHub-Api-Version": "2022-11-28",
         },
       });
 
-      const totalPages = Math.ceil(response.data.total_count / 10);
+      // Calculate totalPages based on the total_count received
+      const totalPages = Math.min(
+        Math.ceil(response.data.total_count / 25),
+        40
+      );
 
       return {
         issues: response.data.items,
