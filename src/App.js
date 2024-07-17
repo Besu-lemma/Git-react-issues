@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="h-[100%]">
       <Provider store={Store}>
-        <div className="App sm:container bg-black mx-auto px-3 md:px-8 pt-4">
+        <div className="App sm:container bg-slate-200 mx-auto px-3 md:px-8 pt-4">
           <SearchBar />
           <IssueItems />
         </div>
